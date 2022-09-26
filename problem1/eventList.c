@@ -57,16 +57,17 @@ void AddEvent(EventList *this, Event *event)
         root = root->next;
     }
     
-    if(this->isEmpty == 0)
-    {
-        this ->last->next = event;
-        this ->last = event;  
-    }
-    else
+    if(this->isEmpty == 1)
     {
         this->head = event;
         this->last =event;
         this->isEmpty = 0;
+        
+    }
+    else
+    {
+        this ->last->next = event;
+        this ->last = event;  
     }
 }
 
