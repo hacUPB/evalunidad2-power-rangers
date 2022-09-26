@@ -57,7 +57,7 @@ void AddEvent(EventList *this, Event *event)
         root = root->next;
     }
     
-    if(this->isEmpty == 1)
+    if(this->head == NULL)
     {
         this->head = event;
         this->last =event;
