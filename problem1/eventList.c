@@ -9,7 +9,7 @@ EventList *CreateEventList(void)
     elptr = (EventList *)malloc(sizeof(EventList));
     elptr ->head = NULL;
     elptr ->last = NULL;
-    elptr ->isEmpty = 0;
+    elptr ->isEmpty = 1;
     if(!elptr)
         perror("None memory space reserve");
     return elptr;
@@ -23,7 +23,7 @@ void DestroyEventList(EventList *this)
 Event *SearchEvent(EventList *this, char *name)
 {
     //We check that the list has been initialize
-    if(this -> isEmpty == 1)
+    if(this -> isEmpty == 0)
     {
         // ptr that has the reference of the the head node
         Event *root = this -> head;
@@ -59,14 +59,14 @@ void AddEvent(EventList *this, Event *event)
     
     if(this->isEmpty == 0)
     {
-        this->head = event;
-        this->last =event;
-        this->isEmpty = 1;
+        this ->last->next = event;
+        this ->last = event;  
     }
     else
     {
-        this ->last->next = event;
-        this ->last = event;  
+        this->head = event;
+        this->last =event;
+        this->isEmpty = 0;
     }
 }
 
@@ -77,7 +77,7 @@ void RemoveEvent(EventList *this, char *name)
     // ptr that has the reference of the the head node
     Event *root = this ->head;
     //We check that the list has been initialize
-    if(this -> isEmpty == 1)
+    if(this -> isEmpty == 0)
     {
         while (current != NULL)
         {
@@ -103,7 +103,7 @@ void RemoveEvent(EventList *this, char *name)
 void ListEvents(EventList *this)
 {
     //We check that the list has been initialize
-    if(this -> isEmpty == 1)
+    if(this -> isEmpty == 0)
     {
         // ptr that has the reference of the the head node
         Event *root = this -> head;
@@ -114,7 +114,6 @@ void ListEvents(EventList *this)
             //root travel acroos the nodes until the NULL
             root = root ->next;
         }
-        printf("\n");
     }
     else
     {
