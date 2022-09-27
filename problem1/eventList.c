@@ -38,10 +38,6 @@ Event *SearchEvent(EventList *this, char *name)
             root = root ->next;
         }
     }
-    else
-    {
-        printf("empty\n");
-    }
 }
 
 void AddEvent(EventList *this, Event *event)
