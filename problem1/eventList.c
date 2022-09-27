@@ -40,7 +40,7 @@ Event *SearchEvent(EventList *this, char *name)
     }
     else
     {
-        printf("List Empty");
+        printf("empty\n");
     }
 }
 
@@ -74,22 +74,36 @@ void AddEvent(EventList *this, Event *event)
 void RemoveEvent(EventList *this, char *name)
 {
     // ptr that has the reference of the the node after the head
-    Event *current = this ->head ->next;
+    Event *current = this ->head -> next;
     // ptr that has the reference of the the head node
     Event *root = this ->head;
     //We check that the list has been initialize
     if(this -> isEmpty == 1)
     {
+        
+        if(strcmp(name, root ->eventName) == 0)
+            {
+                if(root == NULL)
+                {
+                    this ->head = NULL;
+                    this ->last = NULL;
+                    this ->isEmpty = 0;
+                    DestroyEvent(root);
+                }
+                else
+                {
+                    this ->head = current;
+                    DestroyEvent(root);
+                }
+            }
         while (current != NULL)
         {
+            
             if(strcmp(name, current ->eventName) == 0)
             {
-                root->next = current->next;
-                if(this ->last->next == NULL)
-                {
-                    this->last = root;
-                    DestroyEvent(current);
-                }
+                Event *q = current;
+                root ->next = q ->next;
+                DestroyEvent(q);
             }
             root = current;
             current = current ->next;
@@ -97,7 +111,7 @@ void RemoveEvent(EventList *this, char *name)
     }
     else
     {
-         printf("List Empty");
+         printf("empty\n");
     }
 }
 
@@ -118,6 +132,6 @@ void ListEvents(EventList *this)
     }
     else
     {
-        printf("List Empty");
+        printf("empty\n");
     }
 }
