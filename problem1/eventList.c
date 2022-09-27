@@ -51,9 +51,7 @@ void AddEvent(EventList *this, Event *event)
         this->isEmpty = 1;
     }
     else
-    {
-        this ->last->next = event;
-        this ->last = event;  
+    {  
         while (root != NULL)
         {
             //Name comparasion, we check that the won't exist two events with the same name
@@ -62,6 +60,8 @@ void AddEvent(EventList *this, Event *event)
             //root travel acroos the nodes until the NULL
             root = root->next;
         }
+        this ->last->next = event;
+        this ->last = event;
     }
 }
 
