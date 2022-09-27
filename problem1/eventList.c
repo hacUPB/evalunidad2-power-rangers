@@ -81,7 +81,7 @@ void RemoveEvent(EventList *this, char *name)
         
         if(strcmp(name, root ->eventName) == 0)
             {
-                if(root == NULL)
+                if(root ->next == NULL)
                 {
                     this ->head = NULL;
                     this ->last = NULL;
@@ -99,17 +99,16 @@ void RemoveEvent(EventList *this, char *name)
             
             if(strcmp(name, current ->eventName) == 0)
             {
-                Event *q = current;
-                root ->next = q ->next;
-                DestroyEvent(q);
+                root->next = current->next;
+                if(this ->last->next == NULL)
+                {
+                    this->last = root;
+                    DestroyEvent(current);
+                }
             }
             root = current;
             current = current ->next;
         }      
-    }
-    else
-    {
-         printf("empty\n");
     }
 }
 
