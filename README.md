@@ -22,7 +22,7 @@ EventList *CreateEventList(void)
 ## CreateEvent:
 - Crea un puntero tipo event(eptr) y reserva memoria usando malloc.
 - Copia el nombre del buffer en el evento.
-- Cambia el next del evento a NULL.
+- Declara el next del evento a NULL.
 - Devuelve el evento.
 
 ```
@@ -57,27 +57,22 @@ void DestroyEventList(EventList *this)
 ```
 
 ## SearchEvent:
-- Se declara un puntero(root) tipo event que apunta al head de la lista.
 - Se verifica que la lista no está vacía.
-- Mientras que root no sea NULL se comparan los nombres de la lista con el del root y se devulve el nombre del root.
+- Se declara un puntero(root) tipo event que apunta al head de la lista.
+- Mientras que root no sea NULL se comparan los nombres de la lista con el del root y se devulve el nombre del root que tenga match.
 - El root se mueve por la lista hasta que es igual a NULL, es decir, hasta que llega al final.
 
 ```
 Event *SearchEvent(EventList *this, char *name)
 {
-    //We check that the list has been initialize
     if(this -> isEmpty == 1)
     {
-        // ptr that has the reference of the the head node
         Event *root = this -> head;
-        //search procees
         while (root != NULL)
         {
             //We check until we find the match
             if(strcmp(name, root ->eventName) == 0)
-            //Return the event
             return root;
-            //root travel acroos the nodes until the NULL
             root = root ->next;
         }
     }
@@ -86,14 +81,14 @@ Event *SearchEvent(EventList *this, char *name)
 
 ## AddEvent:
 - Se declara un puntero (root) tipo event que apunta al head de la lista.
-- Si el head de la lista es NULL(la lista está vacía) se declaran los datos head y last con el evento nuevo y isEmpty cambia a 1.
-- Se verifica que no existan dos eventos con el mismo nombre.
-- Se recorren los eventos de la lista.
+- Si head de la lista es NULL(la lista está vacía) se declaran los datos head y last con el evento nuevo y isEmpty cambia a 1, estamos anexando el primer dato.
+- Cuando head de la lista es ! = NULL(la lista con 1 item por lo menos).
+- Se verifica que no existan dos eventos con el mismo nombre y recorre los nodos comprobando.
+- Una vez verifcado se le asigna al nodo que esta de ultimo la direccion del nuevo nodo event en el next y declaramos que event es last.
 
 ```
 void AddEvent(EventList *this, Event *event)
 {
-    // ptr that has the reference of the the head node
     Event *root = this ->head;
     if(this->head == NULL)
     {
@@ -105,10 +100,8 @@ void AddEvent(EventList *this, Event *event)
     {  
         while (root != NULL)
         {
-            //Name comparasion, we check that the won't exist two events with the same name
             if(strcmp(event->eventName, root->eventName) == 0)
             return;
-            //root travel acroos the nodes until the NULL
             root = root->next;
         }
         this ->last->next = event;
@@ -118,29 +111,27 @@ void AddEvent(EventList *this, Event *event)
 ```
 
 ## RemoveEvent:
-- Se verifica que la lista no está vacía.
 - Se declara un puntero(current) que apunta a un nodo después del head.
 - Se declara un puntero(root) que apunta al head.
-- Se compara el nombre del head(root ->eventName) con el del buffer(name).
-- Si en la lista solo hay un evento el head y el last de la lista se cambian a NULL e isEmpty cambia a 0 y luego se elimina ese evento de la lista.
+- Se verifica que la lista no está vacía.
 
-- Si hay dos eventos en la lista el head pasa a ser el evento que está señalando el current(segundo actualmente) y se elimina el evento al que está
-apuntando el root(primero de la lista).
 
-- Mientras que current no sea NULL (hayan mas de dos eventos en la lista) se compara el nombre del buffer con el de current.
-El next del primer evento pasa a ser el del tercer evento.
-Se verifica que el último evento sea, en efecto, el último y pasa a tomar los datos del root.
-Se elimina el evento del current.
-La funcion se desplaza entre eventos.
+* Si en la lista el elemento que se desea eliminar es el primero:
+1. Se compara el nombre del head(root ->eventName) con el del buffer(name).
+2. Si la lista solo tiene un event, el root, los valores de head y last se establecen en NULL, isEmpty vuelve a 0 (lista vacía) y llamamos al destroy.
+3. Por el caso contrario de que haya al menos otro nodo, cambiamos el head al nodo de la segunda posición y llamamos el destroy para el root.
+
+
+* Si en la lista el elemento que se desea eliminar es diferente del primero en alguna posición n:
+1. Miramos que current no sea NULL (haya un segundo evento en la lista).
+2. Se compara el nombre del buffer con el de current, y recorremos la lista asignado el valor del current al root y el current next al current.
+3. Si hay match el next del root event(1) pasa a ser el del current next(3) (se comprueba si el evento a eliminar es el ultimo para reasignarlo al evento anterior) y se llama el destroy para el current.
 
 ```
 void RemoveEvent(EventList *this, char *name)
 {
-    // ptr that has the reference of the the node after the head
     Event *current = this ->head -> next;
-    // ptr that has the reference of the the head node
     Event *root = this ->head;
-    //We check that the list has been initialize
     if(this -> isEmpty == 1)
     {
         
@@ -161,7 +152,6 @@ void RemoveEvent(EventList *this, char *name)
             }
         while (current != NULL)
         {
-            
             if(strcmp(name, current ->eventName) == 0)
             {
                 root->next = current->next;
