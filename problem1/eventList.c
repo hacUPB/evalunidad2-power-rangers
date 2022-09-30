@@ -22,11 +22,11 @@ void DestroyEventList(EventList *this)
 
 Event *SearchEvent(EventList *this, char *name)
 {
-    // ptr that has the reference of the the head node
-    Event *root = this -> head;
     //We check that the list has been initialize
     if(this -> isEmpty == 1)
     {
+        // ptr that has the reference of the the head node
+        Event *root = this -> head;
         //search procees
         while (root != NULL)
         {
@@ -67,14 +67,14 @@ void AddEvent(EventList *this, Event *event)
 
 void RemoveEvent(EventList *this, char *name)
 {
-    
-    //We check that the list has been initialize
     if(this -> isEmpty == 1)
     {
-    // ptr that has the reference of the the node after the head
-    Event *current = this ->head -> next;
-    // ptr that has the reference of the the head node
-    Event *root = this ->head;
+        // ptr that has the reference of the the node after the head
+        Event *current = this ->head -> next;
+        // ptr that has the reference of the the head node
+        Event *root = this ->head;
+        //We check that the list has been initialize
+        
         if(strcmp(name, root ->eventName) == 0)
             {
                 if(root ->next == NULL)
@@ -96,15 +96,11 @@ void RemoveEvent(EventList *this, char *name)
             if(strcmp(name, current ->eventName) == 0)
             {
                 root->next = current->next;
-                if(this ->last->next == NULL)
-                {
-                    this->last = root;
-                    DestroyEvent(current);
-                }
+                DestroyEvent(current);
             }
             root = current;
             current = current ->next;
-        }   
+        }      
     }
 }
 
