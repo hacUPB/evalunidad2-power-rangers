@@ -134,7 +134,6 @@ void RemoveEvent(EventList *this, char *name)
     Event *root = this ->head;
     if(this -> isEmpty == 1)
     {
-        
         if(strcmp(name, root ->eventName) == 0)
             {
                 if(root ->next == NULL)
@@ -155,15 +154,11 @@ void RemoveEvent(EventList *this, char *name)
             if(strcmp(name, current ->eventName) == 0)
             {
                 root->next = current->next;
-                if(this ->last->next == NULL)
-                {
-                    this->last = root;
-                    DestroyEvent(current);
-                }
+                DestroyEvent(current);
             }
             root = current;
             current = current ->next;
-        }      
+        }           
     }
 }
 ```
