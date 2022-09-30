@@ -111,9 +111,9 @@ void AddEvent(EventList *this, Event *event)
 ```
 
 ## RemoveEvent:
+- Se verifica que la lista no está vacía.
 - Se declara un puntero(current) que apunta a un nodo después del head.
 - Se declara un puntero(root) que apunta al head.
-- Se verifica que la lista no está vacía.
 
 
 * Si en la lista el elemento que se desea eliminar es el primero:
